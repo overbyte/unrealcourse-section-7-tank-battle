@@ -26,6 +26,12 @@ Tank Battle (Name to come) is an open world tank battle game
 
 ### Rules
 
+Tanks should drive with 'tank controls' with a separately controllable turret.
+
+* Projectiles shouldn't be spammable
+* There should be limited ammo
+* A tank should be able to take a few hits but not too many
+
 ## Game Loop
 
 
