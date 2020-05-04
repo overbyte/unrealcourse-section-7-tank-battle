@@ -7,6 +7,9 @@ Tank Battle (Name to come) is an open world tank battle game
 ## Dependencies
 
 * [The Unreal starter content](https://docs.unrealengine.com/en-US/Engine/Content/Packs/index.html)
+* Font used: [Series Orbit](https://www.dafont.com/seriesorbit.font?l[]=10&l[]=1)
+  (Licence is: 100% Free)
+
 
 ## Game Design
 
