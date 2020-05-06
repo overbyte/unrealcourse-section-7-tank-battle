@@ -19,6 +19,14 @@ void ATankPlayerController::BeginPlay()
     }
 }
 
+
+void ATankPlayerController::Tick(float DeltaSeconds)
+{
+    Super::Tick(DeltaSeconds);
+
+    UE_LOG(LogTemp, Warning, TEXT("TICK TOCK"));
+}
+
 ATank* ATankPlayerController::GetControlledTank() const
 {
     return Cast<ATank>(GetPawn());
