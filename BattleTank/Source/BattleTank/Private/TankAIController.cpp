@@ -11,7 +11,15 @@ void ATankAIController::BeginPlay()
     FindPlayerTank();
 }
 
-void ATankAIController::FindControlledTank()
+void ATankAIController::Tick(float DeltaSeconds)
+{
+    Super::Tick(DeltaSeconds);
+
+    if (!GetPlayerTank()) { return; }
+    AimAtPlayerTank();
+}
+
+void ATankAIController::FindControlledTank() const
 {
     const ATank* ControlledTank = GetControlledTank();
     if (!ControlledTank)
@@ -25,7 +33,7 @@ void ATankAIController::FindControlledTank()
     }
 }
 
-void ATankAIController::FindPlayerTank()
+void ATankAIController::FindPlayerTank() const
 {
     const ATank* PlayerTank = GetPlayerTank();
     if (!PlayerTank)
@@ -38,14 +46,20 @@ void ATankAIController::FindPlayerTank()
     }
 }
 
-ATank* ATankAIController::GetControlledTank()
+ATank* ATankAIController::GetControlledTank() const
 {
     return Cast<ATank>(GetPawn());
 }
 
-ATank* ATankAIController::GetPlayerTank()
+ATank* ATankAIController::GetPlayerTank() const
 {
     return Cast<ATank>(GetWorld()->GetFirstPlayerController()->GetPawn());
 }
 
+void ATankAIController::AimAtPlayerTank() const
+{
+    if (!GetPlayerTank()) { return; }
+    if (!GetControlledTank()) { return; }
+    GetControlledTank()->AimAt(GetPlayerTank()->GetActorLocation());
+}
 
