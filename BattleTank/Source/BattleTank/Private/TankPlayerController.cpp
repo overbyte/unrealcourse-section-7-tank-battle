@@ -100,10 +100,10 @@ FVector ATankPlayerController::GetViewPointPos() const
 bool ATankPlayerController::GetLookVectorHitLocation(const FVector &LookDirection, FVector &OutHitLocation) const
 {
     FCollisionQueryParams CollisionParams(
-        FName(TEXT("")),
-        false,
-        GetPawn()
-    );
+            FName(TEXT("")),
+            false,
+            GetPawn()
+        );
 
     FHitResult OutHitResult;
 
