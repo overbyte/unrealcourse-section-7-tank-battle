@@ -101,7 +101,7 @@ bool ATankPlayerController::GetLookVectorHitLocation(const FVector &LookDirectio
     FCollisionQueryParams CollisionParams(
         FName(TEXT("")),
         false,
-        GetOwner()
+        GetPawn()
     );
 
     FHitResult OutHitResult;
