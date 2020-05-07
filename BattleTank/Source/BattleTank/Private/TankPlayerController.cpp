@@ -24,7 +24,7 @@ void ATankPlayerController::Tick(float DeltaSeconds)
 {
     Super::Tick(DeltaSeconds);
 
-    UE_LOG(LogTemp, Warning, TEXT("TICK TOCK"));
+    AimTowardCrosshair();
 }
 
 ATank* ATankPlayerController::GetControlledTank() const
@@ -32,4 +32,24 @@ ATank* ATankPlayerController::GetControlledTank() const
     return Cast<ATank>(GetPawn());
 }
 
+void ATankPlayerController::AimTowardCrosshair() const
+{
+    if (!GetControlledTank()) { return; }
 
+    FVector OutHitLocation;
+    if (GetSightRayHitLocation(OutHitLocation))
+    {
+        UE_LOG(LogTemp, Warning, TEXT("hit location: %s"), *OutHitLocation.ToString());
+    }
+}
+
+bool ATankPlayerController::GetSightRayHitLocation(FVector &OutHitLocation) const
+{
+    // cast ray from camera through dot
+    // if there's a collision and it's not a tank
+    // update the hit location out param
+    OutHitLocation = FVector(1.f);
+    return true;
+    // otherwise
+    // return false
+}
