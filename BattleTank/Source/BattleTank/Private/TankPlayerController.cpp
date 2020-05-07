@@ -83,20 +83,6 @@ bool ATankPlayerController::GetLookDirection(const FVector2D &ScreenLocation, FV
         );
 }
 
-FVector ATankPlayerController::GetViewPointPos() const
-{
-    // out params
-    FVector OutViewPointPosition;
-    FRotator OutViewPointRotation;
-
-    GetPlayerViewPoint(
-        OutViewPointPosition,
-        OutViewPointRotation
-    );
-
-    return OutViewPointPosition;
-}
-
 bool ATankPlayerController::GetLookVectorHitLocation(const FVector &LookDirection, FVector &OutHitLocation) const
 {
     FCollisionQueryParams CollisionParams(
