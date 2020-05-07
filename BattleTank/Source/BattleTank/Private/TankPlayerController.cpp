@@ -2,6 +2,7 @@
 
 
 #include "TankPlayerController.h"
+#include "Engine/World.h"
 
 void ATankPlayerController::BeginPlay()
 {
@@ -45,11 +46,81 @@ void ATankPlayerController::AimTowardCrosshair() const
 
 bool ATankPlayerController::GetSightRayHitLocation(FVector &OutHitLocation) const
 {
-    // cast ray from camera through dot
+    // get crosshair (dot) position
+    // get viewport size
+    int32 OutViewportSizeX;
+    int32 OutViewportSizeY;
+    GetViewportSize(OutViewportSizeX, OutViewportSizeY);
+
+    FVector2D ScreenLocation(
+            OutViewportSizeX * CrosshairXLocation,
+            OutViewportSizeY * CrosshairYLocation
+        );
+
+    FVector OutLookDirection;
+    if (GetLookDirection(ScreenLocation, OutLookDirection))
+    {
+        // cast ray from camera through crosshair to maximum range
+        GetLookVectorHitLocation(OutLookDirection, OutHitLocation);
+    }
     // if there's a collision and it's not a tank
     // update the hit location out param
-    OutHitLocation = FVector(1.f);
     return true;
     // otherwise
     // return false
+}
+
+// "de-project" the screen position of the crosshair to a world pos
+bool ATankPlayerController::GetLookDirection(const FVector2D &ScreenLocation, FVector &OutWorldDirection) const
+{
+    FVector OutCameraWorldLocation;
+    return DeprojectScreenPositionToWorld(
+            ScreenLocation.X,
+            ScreenLocation.Y,
+            OutCameraWorldLocation,
+            OutWorldDirection
+        );
+}
+
+FVector ATankPlayerController::GetViewPointPos() const
+{
+    // out params
+    FVector OutViewPointPosition;
+    FRotator OutViewPointRotation;
+
+    GetPlayerViewPoint(
+        OutViewPointPosition,
+        OutViewPointRotation
+    );
+
+    return OutViewPointPosition;
+}
+
+bool ATankPlayerController::GetLookVectorHitLocation(const FVector &LookDirection, FVector &OutHitLocation) const
+{
+    FCollisionQueryParams CollisionParams(
+        FName(TEXT("")),
+        false,
+        GetOwner()
+    );
+
+    FHitResult OutHitResult;
+
+    FVector StartLocation = PlayerCameraManager->GetCameraLocation();
+    FVector EndLocation = StartLocation + LookDirection * ProjectileRange;
+
+    if (GetWorld()->LineTraceSingleByChannel(
+            OutHitResult,
+            StartLocation,
+            EndLocation,
+            ECollisionChannel::ECC_Visibility,
+            CollisionParams,
+            FCollisionResponseParams(ECollisionResponse::ECR_Block)
+        )
+    )
+    {
+        OutHitLocation = OutHitResult.Location;
+        return true;
+    }
+    return false;
 }
