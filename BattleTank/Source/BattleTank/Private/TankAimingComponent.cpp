@@ -1,5 +1,6 @@
 // Copyright 2020 Allandt Bik-Elliott
 
+#include "TankBarrel.h"
 #include "Kismet/GameplayStatics.h"
 #include "Kismet/GameplayStaticsTypes.h"
 #include "TankAimingComponent.h"
@@ -15,7 +16,7 @@ UTankAimingComponent::UTankAimingComponent()
 	// ...
 }
 
-void UTankAimingComponent::SetBarrelReference(UStaticMeshComponent* BarrelToSet)
+void UTankAimingComponent::SetBarrelReference(UTankBarrel* BarrelToSet)
 {
     Barrel = BarrelToSet;
 }
