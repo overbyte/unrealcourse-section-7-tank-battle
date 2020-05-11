@@ -53,22 +53,19 @@ bool ATankPlayerController::GetSightRayHitLocation(FVector &OutHitLocation) cons
     int32 OutViewportSizeY;
     GetViewportSize(OutViewportSizeX, OutViewportSizeY);
 
-    FVector2D ScreenLocation(
-            OutViewportSizeX * CrosshairXLocation,
-            OutViewportSizeY * CrosshairYLocation
-        );
+    FVector2D ScreenLocation
+    (
+        OutViewportSizeX * CrosshairXLocation,
+        OutViewportSizeY * CrosshairYLocation
+    );
 
     FVector OutLookDirection;
     if (GetLookDirection(ScreenLocation, OutLookDirection))
     {
         // cast ray from camera through crosshair to maximum range
-        GetLookVectorHitLocation(OutLookDirection, OutHitLocation);
+        return GetLookVectorHitLocation(OutLookDirection, OutHitLocation);
     }
-    // if there's a collision and it's not a tank
-    // update the hit location out param
-    return true;
-    // otherwise
-    // return false
+    return false;
 }
 
 // "de-project" the screen position of the crosshair to a world pos
