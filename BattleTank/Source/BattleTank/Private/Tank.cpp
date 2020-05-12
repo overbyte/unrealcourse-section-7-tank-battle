@@ -28,7 +28,6 @@ void ATank::BeginPlay()
 void ATank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
-
 }
 
 void ATank::SetBarrelReference(UTankBarrel* BarrelToSet)
@@ -39,6 +38,12 @@ void ATank::SetBarrelReference(UTankBarrel* BarrelToSet)
 void ATank::SetTurretReference(UTankTurret* TurretToSet)
 {
     AimingComponent->SetTurretReference(TurretToSet);
+}
+
+void ATank::Fire()
+{
+    float TimeInSeconds = GetWorld()->GetTimeSeconds();
+    UE_LOG(LogTemp, Warning, TEXT("%f SHOOT ALL THE THINGS"), TimeInSeconds);
 }
 
 void ATank::AimAt(FVector HitLocation) const
