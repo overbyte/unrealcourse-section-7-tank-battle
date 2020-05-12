@@ -1,9 +1,9 @@
 // Copyright 2020 Allandt Bik-Elliott
 
-#include "TankBarrel.h"
+#include "TankAimingComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "Kismet/GameplayStaticsTypes.h"
-#include "TankAimingComponent.h"
+#include "TankBarrel.h"
 
 
 // Sets default values for this component's properties
