@@ -16,33 +16,44 @@ UTankAimingComponent::UTankAimingComponent()
 	// ...
 }
 
+void UTankAimingComponent::TickComponent ( float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction )
+{
+
+}
+
 void UTankAimingComponent::SetBarrelReference(UTankBarrel* BarrelToSet)
 {
     Barrel = BarrelToSet;
 }
 
-void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed) const
+void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 {
     if (!Barrel) { return; }
 
     FVector OutLaunchVelocity(0);
-    if (
-        UGameplayStatics::SuggestProjectileVelocity
-        (
-            this,
-            OutLaunchVelocity,
-            Barrel->GetSocketLocation(FName("Projectile")),
-            HitLocation,
-            LaunchSpeed,
-            false,
-            0.f,
-            0.f,
-            ESuggestProjVelocityTraceOption::TraceFullPath
-        )
-    )
+    bool bHaveAimSolution = UGameplayStatics::SuggestProjectileVelocity
+    (
+        this,
+        OutLaunchVelocity,
+        Barrel->GetSocketLocation(FName("Projectile")),
+        HitLocation,
+        LaunchSpeed,
+        false,
+        0.f,
+        0.f,
+        ESuggestProjVelocityTraceOption::DoNotTrace
+    );
+
+    float TimeInSeconds = GetWorld()->GetTimeSeconds();
+    if (bHaveAimSolution)
     {
+        UE_LOG(LogTemp, Warning, TEXT("%f aim solution found"), TimeInSeconds);
         FVector AimDirection = OutLaunchVelocity.GetSafeNormal();
-        UE_LOG(LogTemp, Warning, TEXT("Aiming At %s"), *AimDirection.ToString());
+        MoveBarrelTowards(AimDirection);
+    }
+    else
+    {
+        UE_LOG(LogTemp, Warning, TEXT("%f no aim solution"), TimeInSeconds);
     }
 
 }
@@ -54,6 +65,6 @@ void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
     FRotator BarrelRotation = Barrel->GetForwardVector().Rotation();
     FRotator AimRotation = AimDirection.Rotation();
     FRotator DeltaRotation = AimRotation - BarrelRotation;
-    UE_LOG(LogTemp, Warning, TEXT("Aim rotation: %s"), *DeltaRotation.ToString());
     // move the barrel the right amount this frame
+    Barrel->Elevate(DeltaRotation.Pitch);
 }

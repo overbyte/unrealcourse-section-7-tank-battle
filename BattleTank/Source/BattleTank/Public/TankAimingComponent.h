@@ -18,8 +18,9 @@ class BATTLETANK_API UTankAimingComponent : public UActorComponent
 public:	
 	// Sets default values for this component's properties
 	UTankAimingComponent();
+    virtual void TickComponent ( float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction * ThisTickFunction ) override;
 
-    void AimAt(FVector HitLocation, float LaunchSpeed) const;
+    void AimAt(FVector HitLocation, float LaunchSpeed);
     void SetBarrelReference(UTankBarrel* BarrelToSet);
 
 private:
