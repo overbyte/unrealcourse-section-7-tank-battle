@@ -2,6 +2,7 @@
 
 
 #include "Tank.h"
+#include "Projectile.h"
 #include "TankAimingComponent.h"
 #include "TankBarrel.h"
 #include "TankTurret.h"
@@ -33,6 +34,7 @@ void ATank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 void ATank::SetBarrelReference(UTankBarrel* BarrelToSet)
 {
     AimingComponent->SetBarrelReference(BarrelToSet);
+    Barrel = BarrelToSet;
 }
 
 void ATank::SetTurretReference(UTankTurret* TurretToSet)
@@ -42,6 +44,19 @@ void ATank::SetTurretReference(UTankTurret* TurretToSet)
 
 void ATank::Fire()
 {
+    if (!Barrel) { return; }
+
+    FVector ProjectileSocketLocation = Barrel->GetSocketLocation(FName("Projectile"));
+    FRotator BarrelRotation = Barrel->GetSocketRotation(FName("Projectile"));
+
+    UE_LOG(LogTemp, Warning, TEXT("loc: %s, rot: %s"), *ProjectileSocketLocation.ToString(), *BarrelRotation.ToString());
+
+    GetWorld()->SpawnActor<AProjectile>(
+        ProjectileBlueprint,
+        ProjectileSocketLocation,
+        BarrelRotation
+    );
+
     float TimeInSeconds = GetWorld()->GetTimeSeconds();
     UE_LOG(LogTemp, Warning, TEXT("%f SHOOT ALL THE THINGS"), TimeInSeconds);
 }
