@@ -18,10 +18,10 @@ class BATTLETANK_API ATankPlayerController : public APlayerController
         virtual void Tick(float DeltaSeconds) override;
         virtual void BeginPlay() override;
 
-        UPROPERTY(EditAnywhere)
+        UPROPERTY(EditDefaultsOnly)
             float CrosshairXLocation = 0.5f;
 
-        UPROPERTY(EditAnywhere)
+        UPROPERTY(EditDefaultsOnly)
             float CrosshairYLocation = 0.33333f;
 
         UPROPERTY(EditAnywhere)
