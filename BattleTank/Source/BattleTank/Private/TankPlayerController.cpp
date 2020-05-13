@@ -13,7 +13,6 @@ void ATankPlayerController::BeginPlay()
     if (!ControlledTank)
     {
         UE_LOG(LogTemp, Error, TEXT("No possessed Tank was found"));
-        return;
     }
     else
     {
