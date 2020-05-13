@@ -24,7 +24,7 @@ class BATTLETANK_API ATankPlayerController : public APlayerController
         UPROPERTY(EditDefaultsOnly)
             float CrosshairYLocation = 0.33333f;
 
-        UPROPERTY(EditAnywhere)
+        UPROPERTY(EditDefaultsOnly)
             float ProjectileRange = 1000000.f;
 
     private:
