@@ -51,14 +51,13 @@ void ATank::Fire()
 
     UE_LOG(LogTemp, Warning, TEXT("loc: %s, rot: %s"), *ProjectileSocketLocation.ToString(), *BarrelRotation.ToString());
 
-    GetWorld()->SpawnActor<AProjectile>(
+    AProjectile *Projectile = GetWorld()->SpawnActor<AProjectile>(
         ProjectileBlueprint,
         ProjectileSocketLocation,
         BarrelRotation
     );
 
-    float TimeInSeconds = GetWorld()->GetTimeSeconds();
-    UE_LOG(LogTemp, Warning, TEXT("%f SHOOT ALL THE THINGS"), TimeInSeconds);
+    Projectile->Launch(LaunchSpeed);
 }
 
 void ATank::AimAt(FVector HitLocation) const
