@@ -83,25 +83,26 @@ bool ATankPlayerController::GetLookDirection(const FVector2D &ScreenLocation, FV
 bool ATankPlayerController::GetLookVectorHitLocation(const FVector &LookDirection, FVector &OutHitLocation) const
 {
     FCollisionQueryParams CollisionParams(
-            FName(TEXT("")),
-            false,
-            GetPawn()
-        );
+        FName(TEXT("")),
+        false,
+        GetPawn()
+    );
 
     FHitResult OutHitResult;
 
     FVector StartLocation = PlayerCameraManager->GetCameraLocation();
     FVector EndLocation = StartLocation + LookDirection * ProjectileRange;
 
-    if (GetWorld()->LineTraceSingleByChannel(
-            OutHitResult,
-            StartLocation,
-            EndLocation,
-            ECollisionChannel::ECC_Visibility,
-            CollisionParams,
-            FCollisionResponseParams(ECollisionResponse::ECR_Block)
-        )
-    )
+    bool bHasAimSolution = GetWorld()->LineTraceSingleByChannel(
+        OutHitResult,
+        StartLocation,
+        EndLocation,
+        ECollisionChannel::ECC_Visibility/*,
+        CollisionParams,
+        FCollisionResponseParams(ECollisionResponse::ECR_Block*/
+    );
+
+    if (bHasAimSolution)
     {
         OutHitLocation = OutHitResult.Location;
         return true;
