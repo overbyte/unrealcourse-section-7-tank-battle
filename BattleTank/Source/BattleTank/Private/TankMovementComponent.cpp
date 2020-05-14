@@ -28,3 +28,8 @@ void UTankMovementComponent::SetTurnRightIntent(float Throw)
 }
 
 
+void UTankMovementComponent::RequestDirectMove(const FVector& MoveVelocity, bool bForceMaxSpeed)
+{
+    auto TankName = GetOwner()->GetName();
+    UE_LOG(LogTemp, Warning, TEXT("%s moving at %s"), *TankName, *MoveVelocity.ToString());
+}
