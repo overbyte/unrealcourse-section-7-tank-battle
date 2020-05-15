@@ -27,8 +27,11 @@ class BATTLETANK_API ATankPlayerController : public APlayerController
         UPROPERTY(EditDefaultsOnly)
             float ProjectileRange = 1000000.f;
 
+    protected:
+        UFUNCTION(BlueprintCallable, Category = "Setup")
+            ATank* GetControlledTank() const;
+
     private:
-        ATank* GetControlledTank() const;
         void AimTowardCrosshair() const;
         bool GetSightRayHitLocation(FVector &OutHitLocation) const;
         bool GetLookDirection(const FVector2D &ScreenLocation, FVector &OutWorldDirection) const;
