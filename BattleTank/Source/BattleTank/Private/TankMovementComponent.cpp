@@ -38,6 +38,9 @@ void UTankMovementComponent::RequestDirectMove(const FVector& MoveVelocity, bool
     float DotProduct = FVector::DotProduct(ForwardDirection, ForwardIntent);
     SetForwardIntent(DotProduct);
 
+    float CrossProduct = FVector::CrossProduct(ForwardDirection, ForwardIntent).Z;
+    SetTurnRightIntent(CrossProduct);
+
     //auto TankName = GetOwner()->GetName();
     //UE_LOG(LogTemp, Warning, TEXT("%s moving at %s"), *TankName, *MoveVelocity.ToString());
 }
