@@ -7,7 +7,6 @@
 #include "Tank.generated.h"
 
 class AProjectile;
-class UTankAimingComponent;
 class UTankBarrel;
 class UTankTurret;
 
@@ -21,14 +20,10 @@ class BATTLETANK_API ATank : public APawn
         ATank();
         virtual void BeginPlay() override;
 
-        void AimAt(FVector HitLocation) const;
-
         UFUNCTION(BlueprintCallable, Category = "Firing")
             void Fire();
 
     private:
-        UTankAimingComponent* AimingComponent = nullptr;
-
         UPROPERTY(EditDefaultsOnly, Category = "Setup")
             TSubclassOf<AProjectile> ProjectileBlueprint;
 

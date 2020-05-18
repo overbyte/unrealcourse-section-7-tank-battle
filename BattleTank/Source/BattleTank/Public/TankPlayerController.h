@@ -6,7 +6,6 @@
 #include "GameFramework/PlayerController.h"
 #include "TankPlayerController.generated.h"
 
-class ATank;
 class UTankAimingComponent;
 
 UCLASS()
@@ -29,11 +28,9 @@ class BATTLETANK_API ATankPlayerController : public APlayerController
             float ProjectileRange = 1000000.f;
 
     protected:
-        UFUNCTION(BlueprintCallable, Category = "Setup")
-            ATank* GetControlledTank() const;
-
         UFUNCTION(BlueprintImplementableEvent, Category = "Setup")
             void FoundAimingComponent(UTankAimingComponent* AimingComponentRef);
+
     private:
         void AimTowardCrosshair() const;
         bool GetSightRayHitLocation(FVector &OutHitLocation) const;
