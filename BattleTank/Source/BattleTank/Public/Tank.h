@@ -39,5 +39,6 @@ class BATTLETANK_API ATank : public APawn
             float ReloadTimeInSeconds = 3.f;
 
         double LastFiredTime = 0;
+        // TODO remove barrel
         UTankBarrel *Barrel = nullptr;
 };

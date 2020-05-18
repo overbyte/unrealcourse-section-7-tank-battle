@@ -13,14 +13,8 @@ void ATankPlayerController::BeginPlay()
     if (!ensure(GetPawn())) { return; }
 
     UTankAimingComponent* AimingComponent = GetPawn()->FindComponentByClass<UTankAimingComponent>();
-    if (ensure(AimingComponent))
-    {
-        FoundAimingComponent(AimingComponent);
-    }
-    else
-    {
-        UE_LOG(LogTemp, Error, TEXT("No Aiming Component Found by %s"), *GetName());
-    }
+    if (!ensure(AimingComponent)) { return; }
+    FoundAimingComponent(AimingComponent);
 }
 
 void ATankPlayerController::Tick(float DeltaSeconds)
