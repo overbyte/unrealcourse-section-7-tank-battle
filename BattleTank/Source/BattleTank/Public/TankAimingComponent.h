@@ -29,10 +29,10 @@ class BATTLETANK_API UTankAimingComponent : public UActorComponent
         UFUNCTION(BlueprintCallable, Category = "Setup")
             void Initialise(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet);
 
-        void AimAt(FVector HitLocation);
-
         UFUNCTION(BlueprintCallable, Category = "Firing")
             void Fire();
+
+        void AimAt(FVector HitLocation);
 
         UPROPERTY(EditDefaultsOnly, Category = "Firing")
             float LaunchSpeed = 4000.f; // starting number 1000 m/s
@@ -42,10 +42,15 @@ class BATTLETANK_API UTankAimingComponent : public UActorComponent
 
     protected:
         UPROPERTY(BlueprintReadOnly, Category = "Firing")
-            EFiringState FiringState = EFiringState::Locked;
+            EFiringState FiringState = EFiringState::Reloading;
 
     private:
         UTankAimingComponent();
+        virtual void BeginPlay() override;
+        virtual void TickComponent ( float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction ) override;
+        void MoveBarrelTowards();
+        void MoveTurretTowards();
+        bool IsBarrelMoving();
 
         UPROPERTY(EditDefaultsOnly, Category = "Setup")
             TSubclassOf<AProjectile> ProjectileBlueprint;
@@ -53,7 +58,6 @@ class BATTLETANK_API UTankAimingComponent : public UActorComponent
         UTankBarrel* Barrel = nullptr;
         UTankTurret* Turret = nullptr;
         double LastFiredTime = 0;
-
-        void MoveBarrelTowards(FVector AimDirection);
-        void MoveTurretTowards(FVector AimDirection);
+        FVector AimDirection = FVector(0);
+        float MoveTolerance = 0.01f;
 };
