@@ -2,6 +2,7 @@
 
 
 #include "TankPlayerController.h"
+#include "TankAimingComponent.h"
 #include "Engine/World.h"
 #include "Tank.h"
 
@@ -9,17 +10,18 @@ void ATankPlayerController::BeginPlay()
 {
     Super::BeginPlay();
 
-    ATank* ControlledTank = GetControlledTank();
-    if (!ControlledTank)
+    if (!ensure(GetPawn())) { return; }
+
+    UTankAimingComponent* AimingComponent = GetPawn()->FindComponentByClass<UTankAimingComponent>();
+    if (ensure(AimingComponent))
     {
-        UE_LOG(LogTemp, Error, TEXT("No possessed Tank was found"));
+        FoundAimingComponent(AimingComponent);
     }
     else
     {
-        UE_LOG(LogTemp, Warning, TEXT("controlled tank: %s"), *ControlledTank->GetName());
+        UE_LOG(LogTemp, Error, TEXT("No Aiming Component Found by %s"), *GetName());
     }
 }
-
 
 void ATankPlayerController::Tick(float DeltaSeconds)
 {

@@ -16,26 +16,15 @@ UTankAimingComponent::UTankAimingComponent()
 	// ...
 }
 
-void UTankAimingComponent::TickComponent ( float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction )
+void UTankAimingComponent::Initialise(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet)
 {
-
-}
-
-void UTankAimingComponent::SetBarrelReference(UTankBarrel* BarrelToSet)
-{
-    if (!BarrelToSet) { return; }
     Barrel = BarrelToSet;
-}
-
-void UTankAimingComponent::SetTurretReference(UTankTurret* TurretToSet)
-{
-    if (!TurretToSet) { return; }
     Turret = TurretToSet;
 }
 
 void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 {
-    if (!Barrel || !Turret) { return; }
+    if (!ensure(Barrel && Turret)) { return; }
 
     FVector OutLaunchVelocity(0);
     bool bHaveAimSolution = UGameplayStatics::SuggestProjectileVelocity
