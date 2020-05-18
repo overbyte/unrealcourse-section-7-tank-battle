@@ -23,9 +23,11 @@ void ATank::BeginPlay()
 
 void ATank::Fire()
 {
+    if (!ensure(Barrel)) { return; }
+
     bool bIsReloaded = (FPlatformTime::Seconds() - LastFiredTime) > ReloadTimeInSeconds;
 
-    if (Barrel && bIsReloaded)
+    if (bIsReloaded)
     {
         LastFiredTime = FPlatformTime::Seconds();
 
@@ -45,6 +47,7 @@ void ATank::Fire()
 
 void ATank::AimAt(FVector HitLocation) const
 {
+    if (!ensure(AimingComponent)) { return; }
     AimingComponent->AimAt(HitLocation, LaunchSpeed);
 }
 

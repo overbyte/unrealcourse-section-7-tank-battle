@@ -16,7 +16,7 @@ void ATankAIController::Tick(float DeltaSeconds)
     ATank* ControlledTank = Cast<ATank>(GetPawn());
     ATank* PlayerTank = Cast<ATank>(GetWorld()->GetFirstPlayerController()->GetPawn());
 
-    if (!PlayerTank || !ControlledTank) { return; }
+    if (!ensure(PlayerTank && ControlledTank)) { return; }
 
     // move towards player
     MoveToActor(PlayerTank, AcceptanceRadius);
