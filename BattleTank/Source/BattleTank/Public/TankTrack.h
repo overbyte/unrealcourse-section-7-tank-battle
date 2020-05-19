@@ -19,7 +19,7 @@ class BATTLETANK_API UTankTrack : public UStaticMeshComponent
             void SetThrottle(float Throttle);
         
         UPROPERTY(EditDefaultsOnly, Category = "Input")
-            float MaxDrivingForceNewtons = 400000.f; // assume 40 tonne tank and 1g acceleration
+            float MaxDrivingForceNewtons = 40000000.f; // assume 40 tonne tank and 1g acceleration
 
     private:
         UTankTrack();
