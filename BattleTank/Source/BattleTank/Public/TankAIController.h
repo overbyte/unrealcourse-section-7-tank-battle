@@ -10,11 +10,14 @@ UCLASS()
 class BATTLETANK_API ATankAIController : public AAIController
 {
 	GENERATED_BODY()
-	
+
+    protected:
+        // how close the AI tank will get before it stops moving
+        UPROPERTY(EditDefaultsOnly, Category = "Setup")
+            float AcceptanceRadius = 10000.f;
+
     private:
         virtual void BeginPlay() override;
         virtual void Tick(float DeltaSeconds) override;
 
-        // how close the AI tank will get before it stops moving
-        float AcceptanceRadius = 3000.f;
 };
