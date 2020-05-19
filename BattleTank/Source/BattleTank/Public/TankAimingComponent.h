@@ -9,6 +9,7 @@
 UENUM()
 enum class EFiringState : uint8
 {
+    OutOfAmmo,
     Reloading,
     Aiming,
     Locked
@@ -32,7 +33,11 @@ class BATTLETANK_API UTankAimingComponent : public UActorComponent
         UFUNCTION(BlueprintCallable, Category = "Firing")
             void Fire();
 
+        UFUNCTION(BlueprintCallable, Category = "Firing")
+            int GetAmmoCount() const;
+
         void AimAt(FVector HitLocation);
+        EFiringState GetFiringState() const;
 
         UPROPERTY(EditDefaultsOnly, Category = "Firing")
             float LaunchSpeed = 4000.f; // starting number 1000 m/s
@@ -50,6 +55,7 @@ class BATTLETANK_API UTankAimingComponent : public UActorComponent
         virtual void TickComponent ( float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction ) override;
         void MoveTurretTowards();
         bool IsBarrelMoving();
+        int AmmoCount = 10;
 
         UPROPERTY(EditDefaultsOnly, Category = "Setup")
             TSubclassOf<AProjectile> ProjectileBlueprint;
