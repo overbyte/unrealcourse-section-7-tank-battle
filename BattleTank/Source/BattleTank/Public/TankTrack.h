@@ -23,8 +23,11 @@ class BATTLETANK_API UTankTrack : public UStaticMeshComponent
 
     private:
         UTankTrack();
-        virtual void TickComponent ( float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction ) override;
         virtual void BeginPlay() override;
+        void ApplySidewaysForce();
+        void DriveTrack();
+
+        float CurrentThrottle = 0.f;
 
         UFUNCTION()
         void OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent *OtherComponent, FVector NormalImpulse, const FHitResult& Hit);

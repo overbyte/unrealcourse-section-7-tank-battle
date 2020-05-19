@@ -5,7 +5,7 @@
 
 UTankTrack::UTankTrack()
 {
-    PrimaryComponentTick.bCanEverTick = true;
+    PrimaryComponentTick.bCanEverTick = false;
 }
 
 void UTankTrack::BeginPlay()
@@ -16,14 +16,13 @@ void UTankTrack::BeginPlay()
     OnComponentHit.AddDynamic(this, &UTankTrack::OnHit);
 }
 
-void UTankTrack::TickComponent ( float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction )
+void UTankTrack::ApplySidewaysForce()
 {
-    Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-
     FVector RightVelocity = GetRightVector();
     FVector ForwardVelocity = GetComponentVelocity();
     float SlippageSpeed = FVector::DotProduct(RightVelocity, ForwardVelocity); 
     // work out the required acceleration in m/s/s to correct this slippage
+    float DeltaTime = GetWorld()->GetDeltaSeconds();
     FVector CorrectionAcceleration = -SlippageSpeed / DeltaTime * RightVelocity;
     // calculate and apply sideways friction (opposite acceleration) for F = ma
     // note: there are two tracks so divide by 2
@@ -35,16 +34,20 @@ void UTankTrack::TickComponent ( float DeltaTime, enum ELevelTick TickType, FAct
 
 void UTankTrack::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent *OtherComponent, FVector NormalImpulse, const FHitResult& Hit)
 {
-    UE_LOG(LogTemp, Warning, TEXT("track is on floor"));
+    DriveTrack();
+    ApplySidewaysForce();
+    CurrentThrottle = 0;
 }
 
 void UTankTrack::SetThrottle(float Throttle)
 {
-    // TODO clamp throttle to avoid sensitivity adding speed to the tank
+    CurrentThrottle = FMath::Clamp<float>(CurrentThrottle + Throttle, -1.f, 1.f);
+}
 
-    FVector ForceApplied = GetForwardVector() * Throttle * MaxDrivingForceNewtons;
+void UTankTrack::DriveTrack()
+{
+    FVector ForceApplied = GetForwardVector() * CurrentThrottle * MaxDrivingForceNewtons;
     FVector ForceLocation = GetComponentLocation();
     UPrimitiveComponent *TankRoot = Cast<UPrimitiveComponent>(GetOwner()->GetRootComponent());
     TankRoot->AddForceAtLocation(ForceApplied, ForceLocation);
 }
-
