@@ -34,7 +34,7 @@ class BATTLETANK_API UTankAimingComponent : public UActorComponent
             void Fire();
 
         UFUNCTION(BlueprintCallable, Category = "Firing")
-            int GetAmmoCount() const;
+            int32 GetAmmoCount() const;
 
         void AimAt(FVector HitLocation);
         EFiringState GetFiringState() const;
@@ -50,7 +50,7 @@ class BATTLETANK_API UTankAimingComponent : public UActorComponent
             EFiringState FiringState = EFiringState::Reloading;
 
         UPROPERTY(EditDefaultsOnly, Category = "Firing")
-            int AmmoCount = 10;
+            int32 AmmoCount = 10;
 
     private:
         UTankAimingComponent();
