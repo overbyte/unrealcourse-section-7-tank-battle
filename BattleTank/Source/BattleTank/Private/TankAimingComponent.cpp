@@ -86,7 +86,16 @@ void UTankAimingComponent::MoveTurretTowards()
     FRotator DeltaRotation = AimRotation - BarrelRotation;
 
     Barrel->Elevate(DeltaRotation.Pitch);
+
+    // find the shortest route
+    if (FMath::Abs(DeltaRotation.Yaw) < 180)
+    {
         Turret->RotateTurret(DeltaRotation.Yaw);
+    }
+    else
+    {
+        Turret->RotateTurret(-DeltaRotation.Yaw);
+    }
 }
 
 void UTankAimingComponent::Fire()
