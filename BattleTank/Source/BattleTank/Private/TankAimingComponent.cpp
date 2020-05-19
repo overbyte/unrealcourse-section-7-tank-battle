@@ -63,7 +63,8 @@ bool UTankAimingComponent::IsBarrelMoving()
 
 void UTankAimingComponent::AimAt(FVector HitLocation)
 {
-    if (!ensure(Barrel && Turret)) { return; }
+    if (!ensure(Turret)) { return; }
+    if (!ensure(Barrel)) { return; }
 
     FVector OutLaunchVelocity(0);
     bool bHaveAimSolution = UGameplayStatics::SuggestProjectileVelocity
