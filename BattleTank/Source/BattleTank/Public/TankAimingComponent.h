@@ -49,13 +49,15 @@ class BATTLETANK_API UTankAimingComponent : public UActorComponent
         UPROPERTY(BlueprintReadOnly, Category = "Firing")
             EFiringState FiringState = EFiringState::Reloading;
 
+        UPROPERTY(EditDefaultsOnly, Category = "Firing")
+            int AmmoCount = 10;
+
     private:
         UTankAimingComponent();
         virtual void BeginPlay() override;
         virtual void TickComponent ( float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction ) override;
         void MoveTurretTowards();
         bool IsBarrelMoving();
-        int AmmoCount = 10;
 
         UPROPERTY(EditDefaultsOnly, Category = "Setup")
             TSubclassOf<AProjectile> ProjectileBlueprint;
