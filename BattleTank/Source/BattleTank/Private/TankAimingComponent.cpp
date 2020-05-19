@@ -25,7 +25,6 @@ void UTankAimingComponent::BeginPlay()
 
 void UTankAimingComponent::TickComponent ( float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction )
 {
-    UE_LOG(LogTemp, Warning, TEXT("time secs: %f vs last fired: %f"), GetWorld()->GetTimeSeconds(), LastFiredTime);
     if ((GetWorld()->GetTimeSeconds() - LastFiredTime) < ReloadTimeInSeconds)
     {
         FiringState = EFiringState::Reloading;
