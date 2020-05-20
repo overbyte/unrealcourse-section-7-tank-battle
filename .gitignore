@@ -97,8 +97,8 @@ SourceArt/**/*.tga
 **/DerivedDataCache/*
 
 # Starter Content Ignored
-
-**/Content/StarterContent/*
+# update: migrating starter content from start content project
+#**/Content/StarterContent/*
 
 VSCode Files
 **/.vscode/*
