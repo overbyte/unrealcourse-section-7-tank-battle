@@ -49,9 +49,20 @@ void AProjectile::Launch(float AtSpeed)
 
 void AProjectile::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent *OtherComponent, FVector NormalImpulse, const FHitResult& Hit)
 {
-    UE_LOG(LogTemp, Warning, TEXT("BOOM"));
-
     LaunchBlast->Deactivate();
     ImpactBlast->Activate();
     ExplosionForce->FireImpulse();
+
+    // remove visible shell from world while leaving particles
+    SetRootComponent(ImpactBlast);
+    CollisionMesh->DestroyComponent();
+
+    // set a timer to destroy projectile completely
+    FTimerHandle OutTimerHandle;
+    GetWorld()->GetTimerManager().SetTimer(OutTimerHandle, this, &AProjectile::RetireProjectile, TimeToDestroy, false);
+}
+
+void AProjectile::RetireProjectile()
+{
+    Destroy();
 }
