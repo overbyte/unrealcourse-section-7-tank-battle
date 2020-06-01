@@ -45,5 +45,8 @@ private:
     UPROPERTY(EditDefaultsOnly, Category = "Setup")
         float TimeToDestroy = 5.f;
 
+    UPROPERTY(EditDefaultsOnly, Category = "Setup")
+        float ProjectileDamage = 20.f;
+
     void RetireProjectile();
 };

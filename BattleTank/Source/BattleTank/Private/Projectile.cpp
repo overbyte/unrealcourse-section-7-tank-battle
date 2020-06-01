@@ -2,6 +2,7 @@
 
 
 #include "Projectile.h"
+#include "Kismet/GameplayStatics.h" 
 
 
 // Sets default values
@@ -56,6 +57,16 @@ void AProjectile::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, U
     // remove visible shell from world while leaving particles
     SetRootComponent(ImpactBlast);
     CollisionMesh->DestroyComponent();
+
+    // apply damage
+    UGameplayStatics::ApplyRadialDamage(
+        this, 
+        ProjectileDamage,
+        GetActorLocation(),
+        ExplosionForce->Radius,
+        UDamageType::StaticClass(),
+        TArray<AActor*>() // empty set - damage all actors
+    );
 
     // set a timer to destroy projectile completely
     FTimerHandle OutTimerHandle;
