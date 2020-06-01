@@ -46,10 +46,10 @@ class BATTLETANK_API UTankAimingComponent : public UActorComponent
             float ReloadTimeInSeconds = 3.f;
 
     protected:
-        UPROPERTY(BlueprintReadOnly, Category = "Firing")
+        UPROPERTY(BlueprintReadOnly, VisibleAnywhere, Category = "Firing")
             EFiringState FiringState = EFiringState::Reloading;
 
-        UPROPERTY(EditAnywhere, Category = "Firing")
+        UPROPERTY(VisibleAnywhere, Category = "Firing")
             int32 AmmoCount = 10;
 
         // originally this was set as private + EditDefaultsOnly and the
