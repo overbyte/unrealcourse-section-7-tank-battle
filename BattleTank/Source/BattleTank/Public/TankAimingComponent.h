@@ -49,8 +49,18 @@ class BATTLETANK_API UTankAimingComponent : public UActorComponent
         UPROPERTY(BlueprintReadOnly, Category = "Firing")
             EFiringState FiringState = EFiringState::Reloading;
 
-        UPROPERTY(EditDefaultsOnly, Category = "Firing")
+        UPROPERTY(EditAnywhere, Category = "Firing")
             int32 AmmoCount = 10;
+
+        // originally this was set as private + EditDefaultsOnly and the
+        // BP_Projectile was added in the Tank blueprint but a bug in ue causes
+        // this to become unset when starting from the main menu. The fix is to
+        // use blueprintreadwrite and set the BP_Projectile in the blueprint
+        // construction script: https://www.udemy.com/course/unrealcourse/learn/lecture/5519298#questions/10844328
+        // TODO would be good to go back to the original architecture but not
+        // necessary
+        UPROPERTY(BlueprintReadWrite, Category = "Setup")
+            TSubclassOf<AProjectile> ProjectileBlueprint;
 
     private:
         UTankAimingComponent();
@@ -58,9 +68,6 @@ class BATTLETANK_API UTankAimingComponent : public UActorComponent
         virtual void TickComponent ( float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction ) override;
         void MoveTurretTowards();
         bool IsBarrelMoving();
-
-        UPROPERTY(EditDefaultsOnly, Category = "Setup")
-            TSubclassOf<AProjectile> ProjectileBlueprint;
 
         UTankBarrel* Barrel = nullptr;
         UTankTurret* Turret = nullptr;
