@@ -22,10 +22,11 @@ float ATank::TakeDamage(float DamageAmount, struct FDamageEvent const &DamageEve
     int32 DamageToApply = FMath::Clamp(DamagePoints, 0, CurrentHealth);
 
     CurrentHealth -= DamageToApply;
+    UE_LOG(LogTemp, Warning, TEXT("%s lost %i health. remaining: %i"), *GetName(), DamageToApply, CurrentHealth);
 
     if (CurrentHealth <= 0)
     {
-        UE_LOG(LogTemp, Warning, TEXT("%s died"), *GetName());
+        OnDestroyed.Broadcast();
     }
 
     return DamageToApply;
