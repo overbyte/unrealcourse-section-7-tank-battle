@@ -40,14 +40,15 @@ void ATankPlayerController::SetPawn(APawn* InPawn)
 
 void ATankPlayerController::OnTankDestruction()
 {
-    UE_LOG(LogTemp, Warning, TEXT("Yes I poked one, it was definitely dead"));
+    if (!GetPawn()) { return; }
+    StartSpectatingOnly();
 }
 
 void ATankPlayerController::AimTowardCrosshair() const
 {
+    if (!ensure(GetPawn())) { return; }
     UTankAimingComponent* AimingComponent = GetPawn()->FindComponentByClass<UTankAimingComponent>();
-    if (!ensure(AimingComponent)) { return; }
-
+    if (!ensure(AimingComponent)) { return; } 
     FVector OutHitLocation;
     if (GetSightRayHitLocation(OutHitLocation))
     {

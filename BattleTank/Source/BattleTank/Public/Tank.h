@@ -25,9 +25,11 @@ class BATTLETANK_API ATank : public APawn
         // Sets default values for this pawn's properties
         ATank();
 
+        virtual void BeginPlay() override;
+
         UPROPERTY(VisibleAnywhere, Category = "Health")
             int32 StartingHealth = 100;
 
         UPROPERTY(VisibleAnywhere, Category = "Health")
-            int32 CurrentHealth = StartingHealth;
+            int32 CurrentHealth = 0;
 };
