@@ -36,4 +36,9 @@ class BATTLETANK_API ATankPlayerController : public APlayerController
         bool GetSightRayHitLocation(FVector &OutHitLocation) const;
         bool GetLookDirection(const FVector2D &ScreenLocation, FVector &OutWorldDirection) const;
         bool GetLookVectorHitLocation(const FVector &LookDirection, FVector &OutHitLocation) const;
+
+        virtual void SetPawn(APawn* InPawn) override;
+
+        UFUNCTION()
+            void OnTankDestruction();
 };
