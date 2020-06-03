@@ -10,6 +10,13 @@ ATank::ATank()
 	PrimaryActorTick.bCanEverTick = false;
 }
 
+void ATank::BeginPlay()
+{
+    Super::BeginPlay();
+
+    CurrentHealth = StartingHealth;
+}
+
 float ATank::GetHealthPercent()
 {
     // cast int32 to float and get health expressed from 0-1
