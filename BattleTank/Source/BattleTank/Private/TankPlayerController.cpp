@@ -108,9 +108,7 @@ bool ATankPlayerController::GetLookVectorHitLocation(const FVector &LookDirectio
         OutHitResult,
         StartLocation,
         EndLocation,
-        ECollisionChannel::ECC_Visibility/*,
-        CollisionParams,
-        FCollisionResponseParams(ECollisionResponse::ECR_Block*/
+        ECollisionChannel::ECC_Camera
     );
 
     if (bHasAimSolution)
