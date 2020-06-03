@@ -50,5 +50,6 @@ void ATankAIController::SetPawn(APawn* InPawn)
 
 void ATankAIController::OnTankDestruction()
 {
-    UE_LOG(LogTemp, Warning, TEXT("Yes I poked one, it was definitely dead"));
+    if (!GetPawn()) { return; }
+    GetPawn()->DetachFromControllerPendingDestroy();
 }
