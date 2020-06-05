@@ -16,6 +16,8 @@ public:
 	// Sets default values for this component's properties
 	USpawnPoint();
 
+    AActor* GetSpawnedActor() const;
+
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
@@ -25,4 +27,8 @@ protected:
 
 private:
     void SetupConstraint();
+
+    // set as UPROPERTY to garbage collect this
+    UPROPERTY()
+    AActor* ActorToSpawn = nullptr;
 };

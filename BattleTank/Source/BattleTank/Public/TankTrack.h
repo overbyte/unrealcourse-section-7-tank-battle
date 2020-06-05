@@ -6,6 +6,8 @@
 #include "Components/StaticMeshComponent.h"
 #include "TankTrack.generated.h"
 
+class ASprungWheel;
+
 /**
  * Holds properties and methods for the Tank Track
  */
@@ -24,12 +26,6 @@ class BATTLETANK_API UTankTrack : public UStaticMeshComponent
     private:
         UTankTrack();
 
-        UFUNCTION()
-            void OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent *OtherComponent, FVector NormalImpulse, const FHitResult& Hit);
-
-        virtual void BeginPlay() override;
-        void ApplySidewaysForce();
-        void DriveTrack();
-
-        float CurrentThrottle = 0.f;
+        void DriveTrack(float CurrentThrottle);
+        TArray<ASprungWheel*> GetWheels() const;
 };

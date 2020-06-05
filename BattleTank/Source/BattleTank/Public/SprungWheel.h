@@ -8,39 +8,46 @@
 
 class USphereComponent;
 class UPhysicsConstraintComponent;
+class ASprungWheel;
 
 UCLASS()
 class BATTLETANK_API ASprungWheel : public AActor
 {
 	GENERATED_BODY()
-	
-public:	
-	// Sets default values for this actor's properties
-	ASprungWheel();
+        
+    public:	
+        // Called every frame
+        virtual void Tick(float DeltaTime) override;
+        void AddDrivingForce(float Magnitude);
 
-protected:
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
+    protected:
+        // Called when the game starts or when spawned
+        virtual void BeginPlay() override;
 
-public:	
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
+    private:
+        // Sets default values for this actor's properties
+        ASprungWheel();
 
-private:
-    UPROPERTY(VisibleAnywhere, Category = "Components")
-        USphereComponent* Wheel = nullptr;
+        UFUNCTION()
+            void OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent *OtherComponent, FVector NormalImpulse, const FHitResult& Hit);
 
-    UPROPERTY(VisibleAnywhere, Category = "Components")
-        USphereComponent* Axel = nullptr;
+        void SetupConstraint();
+        TArray<ASprungWheel> GetWheels() const;
+        void ApplyForce();
 
-    UPROPERTY(VisibleAnywhere, Category = "Components")
-        UPhysicsConstraintComponent* WheelAxelConstraint = nullptr;
+        UPROPERTY(VisibleAnywhere, Category = "Components")
+            USphereComponent* Wheel = nullptr;
 
-    UPROPERTY(VisibleAnywhere, Category = "Components")
-        UPhysicsConstraintComponent* MassWheelConstraint = nullptr;
+        UPROPERTY(VisibleAnywhere, Category = "Components")
+            USphereComponent* Axel = nullptr;
 
-    float AxelRadius = 10.f;
-    float WheelRadius = 100.f;
+        UPROPERTY(VisibleAnywhere, Category = "Components")
+            UPhysicsConstraintComponent* WheelAxelConstraint = nullptr;
 
-    void SetupConstraint();
+        UPROPERTY(VisibleAnywhere, Category = "Components")
+            UPhysicsConstraintComponent* MassWheelConstraint = nullptr;
+
+        float AxelRadius = 10.f;
+        float WheelRadius = 100.f;
+        float CurrentForceMagnitude = 0.f;
 };

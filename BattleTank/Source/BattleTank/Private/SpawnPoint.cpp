@@ -22,7 +22,7 @@ void USpawnPoint::BeginPlay()
 	Super::BeginPlay();
 
     // start spawning actor but defer it
-    auto ActorToSpawn = GetWorld()->SpawnActorDeferred<AActor>(SpawnClass, GetComponentTransform());
+    ActorToSpawn = GetWorld()->SpawnActorDeferred<AActor>(SpawnClass, GetComponentTransform());
     if (!ActorToSpawn) { return; }
     // attach to world (not local)
     ActorToSpawn->AttachToComponent(this, FAttachmentTransformRules::KeepWorldTransform);
@@ -30,3 +30,7 @@ void USpawnPoint::BeginPlay()
     UGameplayStatics::FinishSpawningActor(ActorToSpawn, GetComponentTransform());
 }
 
+AActor* USpawnPoint::GetSpawnedActor() const
+{
+    return ActorToSpawn;
+}

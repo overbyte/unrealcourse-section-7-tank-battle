@@ -10,7 +10,7 @@ void ATankPlayerController::BeginPlay()
 {
     Super::BeginPlay();
 
-    if (!ensure(GetPawn())) { return; }
+    if (!GetPawn()) { return; }
 
     UTankAimingComponent* AimingComponent = GetPawn()->FindComponentByClass<UTankAimingComponent>();
     if (!ensure(AimingComponent)) { return; }
