@@ -74,7 +74,6 @@ void ASprungWheel::AddDrivingForce(float Magnitude)
 
 void ASprungWheel::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent *OtherComponent, FVector NormalImpulse, const FHitResult& Hit)
 {
-    UE_LOG(LogTemp, Warning, TEXT("%f hitting %s"), GetWorld()->GetTimeSeconds(), *OtherActor->GetName());
     ApplyForce();
 }
 
