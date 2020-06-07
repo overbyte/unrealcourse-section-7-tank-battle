@@ -23,6 +23,7 @@ void UTankTrack::DriveTrack(float CurrentThrottle)
     // get wheel array
     TArray<ASprungWheel*> Wheels = GetWheels();
     float WheelForceMagnitude = ForceApplied / Wheels.Num();
+
     // loop through array
     for (ASprungWheel* Wheel : Wheels)
     {
